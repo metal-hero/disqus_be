@@ -49,7 +49,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     # 'django.contrib.staticfiles',
-    'social_auth',
+    # 'social_auth',
     # 'provider',
     # 'provider.oauth2', # pip install django-oauth2-provider
     'tastypie',
