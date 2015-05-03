@@ -5,6 +5,17 @@ from core_app import utils
 from hashlib import md5
 
 
+# Mr.German I tried many times to use some libraries for Google authorization
+# And nothing works. Some libraries doesn't work with Django 1.7 or another
+# strange error
+# And now I'll realize own registration.
+
+class myUser(models.Model):
+    name = models.CharField(max_length=50)
+    email = models.CharField(max_length=50, unique=True)
+    password = models.CharField(max_length=150)
+
+
 class Comment(models.Model):
     text = models.CharField(max_length=1000)
     pub_time = models.DateTimeField(auto_now_add=timezone.now)
