@@ -37,10 +37,10 @@ ALLOWED_HOSTS = ['*']
 # LOGOUT_URL = '/logout/'
 # OPENID_SSO_SERVER_URL = 'https://www.google.com/accounts/o8/id'
 
-GOOGLE_OAUTH2_CLIENT_ID = '223596340449-m956tumglqlhmtbvvjvi707j3ud81rl8.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET = 'MMUmB2nIzAJ1KdK1ti-Runa6'
+# GOOGLE_OAUTH2_CLIENT_ID = '223596340449-m956tumglqlhmtbvvjvi707j3ud81rl8.apps.googleusercontent.com'
+# GOOGLE_OAUTH2_CLIENT_SECRET = 'MMUmB2nIzAJ1KdK1ti-Runa6'
 
-SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+# SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 INSTALLED_APPS = (
     'django.contrib.admin',
@@ -48,38 +48,13 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     # 'social_auth',
     # 'provider',
     # 'provider.oauth2', # pip install django-oauth2-provider
     'tastypie',
     'core_app',
     )
-
-# STATIC_ROOT = ''
-# STATIC_URL = '/static/'
-
-# STATICFILES_DIRS = (
-#     # Put strings here, like "/home/html/static" or "C:/www/django/static".
-#     # Always use forward slashes, even on Windows.
-#     # Don't forget to use absolute paths, not relative paths.
-# )
-
-# TEMPLATE_DIRS = (
-#     BASE_DIR + '/disqus_be/templates/',
-# )
-
-# TEMPLATE_LOADERS = (
-#     'django.template.loaders.filesystem.Loader',
-#     'django.template.loaders.app_directories.Loader',
-# #     'django.template.loaders.eggs.Loader',
-# )
-
-# STATICFILES_FINDERS = (
-#     'django.contrib.staticfiles.finders.FileSystemFinder',
-#     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#     # 'django.contrib.staticfiles.finders.DefaultStorageFinder',
-# )
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -125,6 +100,25 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
+STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+STATIC_ROOT = ''
+
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+)
+
+STATICFILES_DIRS = (
+    # Put strings here, like "/home/html/static" or "C:/www/django/static".
+    # Always use forward slashes, even on Windows.
+    # Don't forget to use absolute paths, not relative paths.
+    BASE_DIR + '/static/',
+    # '/root/django-projects/language_school/static/',
+)
+
 TEST_RUNNER = "djnose2.TestRunner"
 
 LOGGING = {
@@ -151,53 +145,61 @@ LOGGING = {
     }
 }
 
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.OpenIDBackend',
-    'social_auth.backends.twitter.TwitterBackend',
-    'social_auth.backends.facebook.FacebookBackend',
-    'social_auth.backends.google.GoogleOAuthBackend',
-    'social_auth.backends.google.GoogleOAuth2Backend',
-    'social_auth.backends.google.GoogleBackend',
-    'social_auth.backends.yahoo.YahooBackend',
-    'social_auth.backends.stripe.StripeBackend',
-    'social_auth.backends.steam.SteamBackend',
-    'social_auth.backends.reddit.RedditBackend',
-    'social_auth.backends.amazon.AmazonBackend',
-    'social_auth.backends.browserid.BrowserIDBackend',
-    'social_auth.backends.contrib.linkedin.LinkedinBackend',
-    'social_auth.backends.contrib.skyrock.SkyrockBackend',
-    'social_auth.backends.contrib.flickr.FlickrBackend',
-    'social_auth.backends.contrib.instagram.InstagramBackend',
-    'social_auth.backends.contrib.github.GithubBackend',
-    'social_auth.backends.contrib.yandex.YandexBackend',
-    'social_auth.backends.contrib.yandex.YandexOAuth2Backend',
-    'social_auth.backends.contrib.yandex.YaruBackend',
-    'social_auth.backends.contrib.disqus.DisqusBackend',
-    'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
-    'social_auth.backends.contrib.foursquare.FoursquareBackend',
-    'social_auth.backends.contrib.live.LiveBackend',
-    'social_auth.backends.contrib.livejournal.LiveJournalBackend',
-    'social_auth.backends.contrib.douban.DoubanBackend',
-    'social_auth.backends.contrib.vk.VKOpenAPIBackend',
-    'social_auth.backends.contrib.vk.VKOAuth2Backend',
-    'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiBackend',
-    'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiAppBackend',
-    'social_auth.backends.contrib.mailru.MailruBackend',
-    'social_auth.backends.contrib.dailymotion.DailymotionBackend',
-    # 'social_auth.backends.contrib.shopify.ShopifyBackend',
-    # 'social_auth.backends.contrib.exacttarget.ExactTargetBackend',
-    'social_auth.backends.contrib.stocktwits.StocktwitsBackend',
-    'social_auth.backends.contrib.behance.BehanceBackend',
-    'social_auth.backends.contrib.readability.ReadabilityBackend',
-    'social_auth.backends.contrib.fedora.FedoraBackend',
-    'django.contrib.auth.backends.ModelBackend',
+# AUTHENTICATION_BACKENDS = (
+#     'social_auth.backends.OpenIDBackend',
+#     'social_auth.backends.twitter.TwitterBackend',
+#     'social_auth.backends.facebook.FacebookBackend',
+#     'social_auth.backends.google.GoogleOAuthBackend',
+#     'social_auth.backends.google.GoogleOAuth2Backend',
+#     'social_auth.backends.google.GoogleBackend',
+#     'social_auth.backends.yahoo.YahooBackend',
+#     'social_auth.backends.stripe.StripeBackend',
+#     'social_auth.backends.steam.SteamBackend',
+#     'social_auth.backends.reddit.RedditBackend',
+#     'social_auth.backends.amazon.AmazonBackend',
+#     'social_auth.backends.browserid.BrowserIDBackend',
+#     'social_auth.backends.contrib.linkedin.LinkedinBackend',
+#     'social_auth.backends.contrib.skyrock.SkyrockBackend',
+#     'social_auth.backends.contrib.flickr.FlickrBackend',
+#     'social_auth.backends.contrib.instagram.InstagramBackend',
+#     'social_auth.backends.contrib.github.GithubBackend',
+#     'social_auth.backends.contrib.yandex.YandexBackend',
+#     'social_auth.backends.contrib.yandex.YandexOAuth2Backend',
+#     'social_auth.backends.contrib.yandex.YaruBackend',
+#     'social_auth.backends.contrib.disqus.DisqusBackend',
+#     'social_auth.backends.contrib.yahoo.YahooOAuthBackend',
+#     'social_auth.backends.contrib.foursquare.FoursquareBackend',
+#     'social_auth.backends.contrib.live.LiveBackend',
+#     'social_auth.backends.contrib.livejournal.LiveJournalBackend',
+#     'social_auth.backends.contrib.douban.DoubanBackend',
+#     'social_auth.backends.contrib.vk.VKOpenAPIBackend',
+#     'social_auth.backends.contrib.vk.VKOAuth2Backend',
+#     'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiBackend',
+#     'social_auth.backends.contrib.odnoklassniki.OdnoklassnikiAppBackend',
+#     'social_auth.backends.contrib.mailru.MailruBackend',
+#     'social_auth.backends.contrib.dailymotion.DailymotionBackend',
+#     # 'social_auth.backends.contrib.shopify.ShopifyBackend',
+#     # 'social_auth.backends.contrib.exacttarget.ExactTargetBackend',
+#     'social_auth.backends.contrib.stocktwits.StocktwitsBackend',
+#     'social_auth.backends.contrib.behance.BehanceBackend',
+#     'social_auth.backends.contrib.readability.ReadabilityBackend',
+#     'social_auth.backends.contrib.fedora.FedoraBackend',
+#     'django.contrib.auth.backends.ModelBackend',
+# )
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.request',
+    # 'social_auth.context_processors.social_auth_by_name_backends',
 )
 
-# TEMPLATE_CONTEXT_PROCESSORS = (
-#     'django.contrib.auth.context_processors.auth',
-#     'django.core.context_processors.request',
-#     'social_auth.context_processors.social_auth_by_name_backends',
-# )
+TEMPLATE_CONTEXT_PROCESSORS = ("django.contrib.auth.context_processors.auth",
+                               "django.core.context_processors.debug",
+                               "django.core.context_processors.i18n",
+                               "django.core.context_processors.media",
+                               "django.core.context_processors.static",
+                               "django.core.context_processors.request",
+                               "django.contrib.messages.context_processors.messages")
 
 # LOGIN_REDIRECT_URL = '/'
 

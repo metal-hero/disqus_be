@@ -15,6 +15,9 @@ class myUser(models.Model):
     email = models.CharField(max_length=50, unique=True)
     password = models.CharField(max_length=150)
 
+    def __unicode__(self):
+    	return unicode(self.name)+" "+unicode(self.email)
+
 
 class Comment(models.Model):
     text = models.CharField(max_length=1000)
@@ -22,3 +25,6 @@ class Comment(models.Model):
     is_public = models.BooleanField(default=True)
     author_title = models.CharField(max_length=1000)
     image = models.CharField(max_length=1000)
+
+    def __unicode__(self):
+    	return unicode(self.author_title)+" "+unicode(self.text)
