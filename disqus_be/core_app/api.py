@@ -1,6 +1,5 @@
 """This module contains API resource classes"""
 from tastypie.resources import ModelResource
-# from core_app.models import Comment
 from tastypie.authorization import Authorization
 # from tastypie.authentication import SessionAuthentication
 from tastypie import fields
@@ -21,7 +20,6 @@ from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 # And now I'll realize own registration.
 
 def login(request):
-    # print request.POST
     list_str = str(request.POST.get("list"))
     print list_str
     data = {}
@@ -54,14 +52,11 @@ class myUserRegistration(ModelResource):
     class Meta:
         queryset = myUser.objects.all()
         resource_name = 'my_user'
-        # excludes = ['password']
-        # authentication = SessionAuthentication()
         authorization = Authorization()
         always_return_data = True
 
 
 class CommentResource(ModelResource):
-    # user = fields.ForeignKey(CommentResource, 'user')
 
     class Meta:
         queryset = Comment.objects.all()
@@ -73,19 +68,8 @@ class CommentResource(ModelResource):
             # 'pub_date': ['exact', 'lt', 'lte', 'gte', 'gt'],
         }
 
+        # method for filtering comments for each site
         def dispatch(self, request_type, request, **kwargs):
             print request.META.get('site_url')
             self._meta.queryset.filter(site_url=request.META.get('site_url'))
             return super(CommentResource, self).dispatch(request_type, request, **kwargs)
-
-    # def hydrate(self, bundle):
-    # Don't add student with existed email
-    # if bundle.obj.email!=bundle.request.student.email:
-    # bundle.data['email'] = bundle.obj.email
-    #     if bundle.request.method == 'GET':
-    #         print bundle.data
-    # bundle.obj.pk = bundle.data['pk']
-    #         site_url = bundle.data['site_url']
-
-    #         print "New student was successfully added!"
-    #     return bundle
