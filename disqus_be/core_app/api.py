@@ -20,33 +20,17 @@ from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
 # strange error
 # And now I'll realize own registration.
 
-# def get_form(request):
-#     data = {}
-#     data['title'] = 'Course registration'
-#     form = {}
-#     form['name'] = 'Name'
-#     form['surname'] = 'Surname'
-#     form['email'] = 'example@mail.com'
-#     form['phone'] = '+7(777)777-77-77'
-#     form['lessons_time'] = ['morning', 'afternoon', 'evening']
-#     form['program_preferences'] = [
-#         'Foundation', 'IELTS', 'TOEFL', 'SAT', 'another']
-#     data['form'] = form
-#     response_data = json.dumps(data)
-#     print json.dumps(data)
-#     return HttpResponse(response_data, content_type='application/json')
-
 def login(request):
     # print request.POST
     list_str = str(request.POST.get("list"))
     print list_str
-    data={}
+    data = {}
     if request.GET.get('email') and request.GET.get('password'):
         email = request.GET['email']
         password = request.GET['password']
 
         try:
-            user = myUser.objects.get(email = email)
+            user = myUser.objects.get(email=email)
             print user
             print user.password == password
             if user.password == password:
@@ -76,72 +60,32 @@ class myUserRegistration(ModelResource):
         always_return_data = True
 
 
-# class myUserAuthentication(ModelResource):
-#     name = fields.CharField(attribute="name")
-#     email = fields.CharField(attribute="email")
-#     password = fields.CharField(attribute="password")
-
-#     class Meta:
-#         queryset = myUser.objects.all()
-#         resource_name = 'sign_in'
-#         excludes = ['name']
-# filtering = {"status": ALL }
-# filtering = {
-# "email": ALL_WITH_RELATIONS,
-# "password": ALL_WITH_RELATIONS
-# }
-#         authorization = Authorization()
-# authentication = SessionBasicAuthentication()
-#         always_return_data = True
-
-#     def hydrate(self, bundle):
-#         print bundle
-#         if self.is_authenticated(bundle.request):
-#             pass
-#         else:
-#             print bundle.data
-#             if bundle.data.get('email') and bundle.data.get('password'):
-#                 email = bundle.data['email']
-#                 password = bundle.data['password']
-#                 try:
-#                     user = myUser.objects.get(email=email)
-#                     if user.password == password:
-#                         bundle.request.session['user_id'] = user.pk
-#                         bundle.data[
-#                             'message'] = 'You have successfully signed in!'
-#                         print bundle.request.session.get('user_id')
-#                 except:
-#                     bundle.data['error'] = 'User with such email is not exist'
-# print bundle.request
-#         return bundle
-
-    # def hydrate(self, bundle):
-    #     if bundle.request.method == 'POST':
-    #         print bundle.data
-    # bundle.obj.pk = bundle.data['pk']
-    #         bundle.data['name'], bundle.data['surname'] = bundle.data['name'][0].upper(
-    #         ) + bundle.data['name'][1:], bundle.data['surname'][0].upper() + bundle.data['surname'][1:]
-    #         bundle.obj.name, bundle.obj.surname = bundle.data[
-    #             'name'], bundle.data['surname']
-    #         bundle.obj.phone = bundle.data['phone']
-    #         bundle.obj.email = bundle.data['email']
-    #         Secretary.refreshUser(bundle.obj)
-    #         info = {'text': "You have created " + unicode(bundle.obj) + "!",
-    #                 'info': {'login': bundle.obj.login, 'password': bundle.obj.password}}
-    #         bundle.obj.save()
-    #         send_mail_to_student(info, bundle.obj)
-    #         print "New student was successfully added!"
-    #     return bundle
-
-
 class CommentResource(ModelResource):
-    # user = fields.ForeignKey(UserResource, 'user')
+    # user = fields.ForeignKey(CommentResource, 'user')
 
     class Meta:
         queryset = Comment.objects.all()
         resource_name = 'comment'
-        # authorization = Authorization()
+        authorization = Authorization()
         filtering = {
             # 'user': ALL_WITH_RELATIONS,
-            'pub_date': ['exact', 'lt', 'lte', 'gte', 'gt'],
+            'site_url': ALL_WITH_RELATIONS
+            # 'pub_date': ['exact', 'lt', 'lte', 'gte', 'gt'],
         }
+
+        def dispatch(self, request_type, request, **kwargs):
+            print request.META.get('site_url')
+            self._meta.queryset.filter(site_url=request.META.get('site_url'))
+            return super(CommentResource, self).dispatch(request_type, request, **kwargs)
+
+    # def hydrate(self, bundle):
+    # Don't add student with existed email
+    # if bundle.obj.email!=bundle.request.student.email:
+    # bundle.data['email'] = bundle.obj.email
+    #     if bundle.request.method == 'GET':
+    #         print bundle.data
+    # bundle.obj.pk = bundle.data['pk']
+    #         site_url = bundle.data['site_url']
+
+    #         print "New student was successfully added!"
+    #     return bundle
